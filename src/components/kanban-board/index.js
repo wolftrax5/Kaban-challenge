@@ -27,6 +27,17 @@ const  KanbanBoard  = () => {
         }
       }
   }
+  const handlerPrevStage = (name) => {
+    let taskindex = tasks.findIndex((task) => {
+        return task.name === name
+    })
+    if(taskindex > -1){
+      let task = tasks[taskindex];
+      if(task.stage > 0) {
+        setTasks((state) => [ ...tasks.slice(0, taskindex), {...task, stage: task.stage - 1}, ...tasks.slice(taskindex + 1)])
+      }
+    }
+}
   // set tasks no every Stage
   let stagesTasks = [];
     
@@ -66,7 +77,7 @@ const  KanbanBoard  = () => {
                                     <div className="li-content layout-row justify-content-between align-items-center">
                                       <span data-testid={`${task.name.split(' ').join('-')}-name`}>{task.name}</span>
                                       <div className="icons">
-                                        <button className="icon-only x-small mx-2" data-testid={`${task.name.split(' ').join('-')}-back`}>
+                                        <button onClick={()=> handlerPrevStage(task.name)} className="icon-only x-small mx-2" data-testid={`${task.name.split(' ').join('-')}-back`}>
                                           <i className="material-icons">arrow_back</i>
                                         </button>
                                         <button onClick={() => handlerNextStage(task.name)} className="icon-only x-small mx-2" data-testid={`${task.name.split(' ').join('-')}-forward`}>
