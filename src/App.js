@@ -10,7 +10,7 @@ class App extends Component {
     return (
       <div>
         <h8k-navbar header={title}></h8k-navbar>
-        <KanbanBoard/>
+        <h1>Hello world</h1>
       </div>
     );
   }
