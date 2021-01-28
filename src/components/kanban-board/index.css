@@ -20,3 +20,7 @@ ul {
 .li-content {
 height: 25px;
 }
+.input_error{
+    display: block;
+    color: red;
+}
