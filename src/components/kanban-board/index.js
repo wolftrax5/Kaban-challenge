@@ -14,6 +14,9 @@ const  KanbanBoard  = () => {
 
   // Add task to Array
   const handlerNewTask = (name) => {
+    if(!name.trim()){
+      return
+    }
     setTasks((state) => [{name, stage: 0} , ...state])
     setTaskName('')
   }
@@ -39,7 +42,12 @@ const  KanbanBoard  = () => {
         setTasks((state) => [ ...tasks.slice(0, taskindex), {...task, stage: task.stage - 1}, ...tasks.slice(taskindex + 1)])
       }
     }
-}
+  }
+  // Remove Task
+  const handlerRemoveTask = (name) => {
+    let newTasks = tasks.filter((task) => task.name !== name)
+    setTasks((state) => [...newTasks])
+  }
   // set tasks no every Stage
   let stagesTasks = [];
     
@@ -85,7 +93,7 @@ const  KanbanBoard  = () => {
                                         <button onClick={() => handlerNextStage(task.name)} className="icon-only x-small mx-2" data-testid={`${task.name.split(' ').join('-')}-forward`}>
                                           <i className="material-icons">arrow_forward</i>
                                         </button>
-                                        <button className="icon-only danger x-small mx-2" data-testid={`${task.name.split(' ').join('-')}-delete`}>
+                                        <button onClick={()=> handlerRemoveTask(task.name)} className="icon-only danger x-small mx-2" data-testid={`${task.name.split(' ').join('-')}-delete`}>
                                           <i className="material-icons">delete</i>
                                         </button>
                                       </div>
