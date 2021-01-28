@@ -32,27 +32,19 @@ const  KanbanBoard  = () => {
     setError('')
   }
   // mode task up
-  const handlerNextStage = (name) => {
+  const handleNextStage = (name, direction) => {
       let taskindex = tasks.findIndex((task) => {
           return task.name === name
       })
-      if(taskindex > -1){
-        let task = tasks[taskindex];
-        if(task.stage < 3) {
-          setTasks((state) => [ ...tasks.slice(0, taskindex), {...task, stage: task.stage + 1}, ...tasks.slice(taskindex + 1)])
-        }
+      if(taskindex < 0){
+        return
       }
-  }
-  const handlerPrevStage = (name) => {
-    let taskindex = tasks.findIndex((task) => {
-        return task.name === name
-    })
-    if(taskindex > -1){
       let task = tasks[taskindex];
-      if(task.stage > 0) {
-        setTasks((state) => [ ...tasks.slice(0, taskindex), {...task, stage: task.stage - 1}, ...tasks.slice(taskindex + 1)])
+      const newStageIndex = direction === 'left' ? task.stage - 1 : task.stage + 1
+      if(newStageIndex >= STAGES_NAMES.length || newStageIndex < 0){
+        return
       }
-    }
+      setTasks((state) => [ ...tasks.slice(0, taskindex), {...task, stage: newStageIndex}, ...tasks.slice(taskindex + 1)])
   }
   // Remove Task
   const handlerRemoveTask = (name) => {
@@ -96,10 +88,10 @@ const  KanbanBoard  = () => {
                                     <div className="li-content layout-row justify-content-between align-items-center">
                                       <span data-testid={`${task.name.split(' ').join('-')}-name`}>{task.name}</span>
                                       <div className="icons">
-                                        <button disabled={task.stage === 0} onClick={()=> handlerPrevStage(task.name)} className="icon-only x-small mx-2" data-testid={`${task.name.split(' ').join('-')}-back`}>
+                                        <button disabled={task.stage === 0} onClick={()=> handleNextStage(task.name, 'left')} className="icon-only x-small mx-2" data-testid={`${task.name.split(' ').join('-')}-back`}>
                                           <i className="material-icons">arrow_back</i>
                                         </button>
-                                        <button disabled={task.stage === 3} onClick={() => handlerNextStage(task.name)} className="icon-only x-small mx-2" data-testid={`${task.name.split(' ').join('-')}-forward`}>
+                                        <button disabled={task.stage === 3} onClick={() => handleNextStage(task.name)} className="icon-only x-small mx-2" data-testid={`${task.name.split(' ').join('-')}-forward`}>
                                           <i className="material-icons">arrow_forward</i>
                                         </button>
                                         <button onClick={()=> handlerRemoveTask(task.name)} className="icon-only danger x-small mx-2" data-testid={`${task.name.split(' ').join('-')}-delete`}>
