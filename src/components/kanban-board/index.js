@@ -87,10 +87,10 @@ const  KanbanBoard  = () => {
                                     <div className="li-content layout-row justify-content-between align-items-center">
                                       <span data-testid={`${task.name.split(' ').join('-')}-name`}>{task.name}</span>
                                       <div className="icons">
-                                        <button onClick={()=> handlerPrevStage(task.name)} className="icon-only x-small mx-2" data-testid={`${task.name.split(' ').join('-')}-back`}>
+                                        <button disabled={task.stage === 0} onClick={()=> handlerPrevStage(task.name)} className="icon-only x-small mx-2" data-testid={`${task.name.split(' ').join('-')}-back`}>
                                           <i className="material-icons">arrow_back</i>
                                         </button>
-                                        <button onClick={() => handlerNextStage(task.name)} className="icon-only x-small mx-2" data-testid={`${task.name.split(' ').join('-')}-forward`}>
+                                        <button disabled={task.stage === 3} onClick={() => handlerNextStage(task.name)} className="icon-only x-small mx-2" data-testid={`${task.name.split(' ').join('-')}-forward`}>
                                           <i className="material-icons">arrow_forward</i>
                                         </button>
                                         <button onClick={()=> handlerRemoveTask(task.name)} className="icon-only danger x-small mx-2" data-testid={`${task.name.split(' ').join('-')}-delete`}>
