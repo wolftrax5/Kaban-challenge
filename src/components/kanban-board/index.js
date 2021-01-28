@@ -98,8 +98,8 @@ const KanbanBoard = () => {
                       <Task 
                         task={task} 
                         key={`${i}${index}`}
-                        arrowClick={handleNextStage} 
-                        deleteClick={handlerRemoveTask}
+                        onArrowClick={handleNextStage} 
+                        onDeleteClick={handlerRemoveTask}
                       />
                     );
                   })}
