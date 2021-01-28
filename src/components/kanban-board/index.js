@@ -4,19 +4,28 @@ import "./index.css";
 const STAGES_NAMES= ['Backlog', 'To Do', 'Ongoing', 'Done'];
 
 const  KanbanBoard  = () => {
-  const [tasks, setTask] = useState([
+  const [tasks, setTasks] = useState([
     { name: '1', stage: 0 },
     { name: '2', stage: 0 },
   ])
 
   // Add task to Array
   const handlerNewTask = (name) => {
-    setTask((state) => [{name, stage: 0} , ...state]) 
+    setTasks((state) => [{name, stage: 0} , ...state]) 
   }
   // new task name
   const [taskName, setTaskName] = useState('')
   // mode task up
-  const handlerForwardTask = (e) => {
+  const handlerNextStage = (name) => {
+      let taskindex = tasks.findIndex((task) => {
+          return task.name === name
+      })
+      if(taskindex > -1){
+        let task = tasks[taskindex];
+        if(task.stage < 3) {
+          setTasks((state) => [ ...tasks.slice(0, taskindex), {...task, stage: task.stage + 1}, ...tasks.slice(taskindex + 1)])
+        }
+      }
   }
   // set tasks no every Stage
   let stagesTasks = [];
@@ -60,7 +69,7 @@ const  KanbanBoard  = () => {
                                         <button className="icon-only x-small mx-2" data-testid={`${task.name.split(' ').join('-')}-back`}>
                                           <i className="material-icons">arrow_back</i>
                                         </button>
-                                        <button onClick={handlerForwardTask} className="icon-only x-small mx-2" data-testid={`${task.name.split(' ').join('-')}-forward`}>
+                                        <button onClick={() => handlerNextStage(task.name)} className="icon-only x-small mx-2" data-testid={`${task.name.split(' ').join('-')}-forward`}>
                                           <i className="material-icons">arrow_forward</i>
                                         </button>
                                         <button className="icon-only danger x-small mx-2" data-testid={`${task.name.split(' ').join('-')}-delete`}>
