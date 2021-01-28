@@ -9,12 +9,14 @@ const  KanbanBoard  = () => {
     { name: '2', stage: 0 },
   ])
 
-  // Add task to Array
-  const handlerNewTask = (name) => {
-    setTasks((state) => [{name, stage: 0} , ...state]) 
-  }
   // new task name
   const [taskName, setTaskName] = useState('')
+
+  // Add task to Array
+  const handlerNewTask = (name) => {
+    setTasks((state) => [{name, stage: 0} , ...state])
+    setTaskName('')
+  }
   // mode task up
   const handlerNextStage = (name) => {
       let taskindex = tasks.findIndex((task) => {
