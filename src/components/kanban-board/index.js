@@ -17,6 +17,10 @@ const  KanbanBoard  = () => {
     if(!name.trim()){
       return
     }
+
+    if(tasks.some(task =>task.name === name)){
+      return
+    }
     setTasks((state) => [{name, stage: 0} , ...state])
     setTaskName('')
   }
