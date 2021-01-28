@@ -3,7 +3,7 @@ import "./index.css";
 
 import { getTasksByStage, STAGES_NAMES } from "../../utils/tasks";
 import { Task } from '../Task'
-
+import { TaskList } from '../TaskList'
 const KanbanBoard = () => {
   const [tasks, setTasks] = useState([
     { name: "1", stage: 0 },
@@ -89,10 +89,7 @@ const KanbanBoard = () => {
       <div className="mt-50 layout-row">
         {stagesTasks.map((tasks, i) => {
           return (
-            <div className="card outlined ml-20 mt-0" key={`${i}`}>
-              <div className="card-text">
-                <h4>{STAGES_NAMES[i]}</h4>
-                <ul className="styled mt-50" data-testid={`stage-${i}`}>
+            <TaskList name={STAGES_NAMES[i]} key={i} index={i}>
                   {tasks.map((task, index) => {
                     return (
                       <Task 
@@ -103,9 +100,7 @@ const KanbanBoard = () => {
                       />
                     );
                   })}
-                </ul>
-              </div>
-            </div>
+            </TaskList>
           );
         })}
       </div>
