@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./index.css";
+import {getTasksByStage, STAGES_NAMES} from '../../utils/tasks'
 
-const STAGES_NAMES= ['Backlog', 'To Do', 'Ongoing', 'Done'];
 
 const  KanbanBoard  = () => {
   const [tasks, setTasks] = useState([
@@ -59,16 +59,9 @@ const  KanbanBoard  = () => {
     let newTasks = tasks.filter((task) => task.name !== name)
     setTasks((state) => [...newTasks])
   }
-  // set tasks no every Stage
-  let stagesTasks = [];
-    
-  for (let i = 0; i < STAGES_NAMES.length; ++i) {
-    stagesTasks.push([]);
-  }
-  for (let task of tasks) {
-    const stageId = task.stage;
-    stagesTasks[stageId].push(task);
-  }
+
+  let stagesTasks = getTasksByStage(tasks);
+
   return (
     <div className="mt-20 layout-column justify-content-center align-items-center">
       <section className="mt-50 layout-row align-items-center justify-content-center">
