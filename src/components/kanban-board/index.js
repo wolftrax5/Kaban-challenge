@@ -8,6 +8,7 @@ const KanbanBoard = () => {
   const [tasks, setTasks] = useState([
     { name: "1", stage: 0 },
     { name: "2", stage: 0 },
+    { name: "task", stage: 0 },
   ]);
   // new task name
   const [taskName, setTaskName] = useState("");
